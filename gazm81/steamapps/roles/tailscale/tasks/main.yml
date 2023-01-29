@@ -1,0 +1,50 @@
+---
+- name: Add Tailscale repository
+  when: ansible_os_family == "RedHat"
+  yum_repository:
+    name: tailscale
+    description: Tailscale Repository
+    baseurl: https://pkgs.tailscale.com/stable/centos/$releasever/$basearch
+    gpgcheck: 1
+    gpgkey: https://pkgs.tailscale.com/stable/centos/gpg
+    enabled: 1
+
+- name: Add Webmin apt repository key.
+  ansible.builtin.get_url:
+    url: https://pkgs.tailscale.com/stable/ubuntu/jammy.asc
+    dest: /etc/apt/trusted.gpg.d/tailscale.asc
+    mode: '0644'
+    force: true
+  when: ansible_os_family == "Debian"
+
+- name: Add Tailscale repository
+  when: ansible_os_family == "Debian"
+  apt_repository:
+    repo: 'deb https://pkgs.tailscale.com/stable/ubuntu jammy main'
+    state: present
+  
+- name: Install Tailscale package
+  when: ansible_os_family == "RedHat"
+  package:
+    name: tailscale
+    state: present
+
+- name: Install Tailscale package
+  when: ansible_os_family == "Debian"
+  apt:
+    name: tailscale
+    state: present
+    
+- name: Start and enable Tailscale service
+  when: ansible_os_family == "RedHat"
+  service:
+    name: tailscale
+    state: started
+    enabled: yes
+
+- name: Start and enable Tailscale service
+  when: ansible_os_family == "Debian"
+  systemd:
+    name: tailscaled
+    state: started
+    enabled: yes

@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include tailscale"
+      include_role:
+        name: "tailscale"
