@@ -1,0 +1,6 @@
+---
+steamUserName: steam
+steamDirectory: /var/lib/steam
+steamAppId: 258550
+steamAppName: rust
+steamAppLaunch: FactoryServer.sh

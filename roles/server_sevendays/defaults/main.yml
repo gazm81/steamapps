@@ -1,0 +1,6 @@
+---
+steamUserName: steam
+steamDirectory: /var/lib/steam
+steamAppId: 294420
+steamAppName: sevendays
+steamAppLaunch: FactoryServer.sh
