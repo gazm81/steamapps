@@ -25,7 +25,7 @@
 
 - name: Create the service
   template:
-    src: templates/steamApp.service.j2
+    src: templates/steamapp.service.j2
     dest: "{{ steamDirectory }}/{{ steamAppName}}/{{ steamAppName}}.service"
     owner: "{{ steamUserName }}"
     group: "{{ steamUserName }}"
