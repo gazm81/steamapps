@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include server-satisfactory"
+    - name: "Include steamcmd"
       include_role:
-        name: "server-satisfactory"
+        name: "steamcmd"

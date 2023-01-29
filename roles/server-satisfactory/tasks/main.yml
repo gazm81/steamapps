@@ -1,2 +1,51 @@
 ---
-# tasks file for server-satisfactory
+- name: Create the Steam app {{ steamAppName}} directory
+  file:
+    path: "{{ steamDirectory }}/{{ steamAppName}}"
+    state: directory
+    mode: 0740
+    owner: "{{ steamUserName }}"
+    group: "{{ steamUserName }}"
+
+- name: Place the update script
+  template:
+    src: templates/steamapp_update.j2
+    dest: "{{ steamDirectory }}/{{ steamAppName}}/{{ steamAppName}}_update"
+    owner: "{{ steamUserName }}"
+    group: "{{ steamUserName }}"
+    mode: 0740
+
+- name: Create the launch script
+  template:
+    src: templates/steamapp_launch.j2
+    dest: "{{ steamDirectory }}/{{ steamAppName}}/{{ steamAppName}}_launch"
+    owner: "{{ steamUserName }}"
+    group: "{{ steamUserName }}"
+    mode: 0740
+
+- name: Create the service
+  template:
+    src: templates/steamApp.service.j2
+    dest: "{{ steamDirectory }}/{{ steamAppName}}/{{ steamAppName}}.service"
+    owner: "{{ steamUserName }}"
+    group: "{{ steamUserName }}"
+    mode: 0740
+
+- name: Create a symbolic link to satisfactory
+  ansible.builtin.file:
+    src: "{{ steamDirectory }}/{{ steamAppName}}/{{ steamAppName }}.service"
+    dest: /etc/systemd/system/{{ steamAppName }}.service
+    owner: root
+    group: root
+    state: link
+
+- name: manual run of the steam app launch
+  ansible.builtin.command: "{{ steamDirectory }}/steamcmd.sh +runscript {{ steamDirectory }}/{{ steamAppName}}/{{ steamAppName}}_update"
+
+- name: Restart network service for interface eth0
+  ansible.builtin.service:
+    name: "{{ steamAppName}}"
+    state: restarted
+    enabled: true
+
+  #when: steamCheck.rc != 0

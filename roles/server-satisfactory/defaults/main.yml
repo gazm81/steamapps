@@ -1,2 +1,6 @@
 ---
-# defaults file for server-satisfactory
+steamUserName: steam
+steamDirectory: /var/lib/steam
+steamAppId: 1690800
+steamAppName: satisfactory
+steamAppLaunch: FactoryServer.sh

@@ -1,0 +1,18 @@
+[Unit]
+Description=My steamcmd {{ steamAppName }} Server
+After=network.target
+
+[Service]
+User=steam
+WorkingDirectory= {{ steamDirectory }}
+ExecStartPre= {{ steamDirectory }}/steamcmd.sh +runscript {{ steamDirectory }}/{{ steamAppName}}/{{ steamAppName}}_update
+ExecStart={{ steamDirectory }}/{{ steamAppName}}/{{ steamAppName}}_launch
+## TimeoutStartSec=infinity
+## Restart=always
+LimitNOFILE=4096
+StandardOutput=append:/var/log/{{ steamAppName }}.log
+StandardError=append:/var/log/{{ steamAppName }}.err
+
+[Install]
+WantedBy=multi-user.target
+## END OF FILE 
