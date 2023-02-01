@@ -1,6 +1,6 @@
 ---
 steamUserName: steam
 steamDirectory: /var/lib/steam
-steamAppId: 294420
-steamAppName: sevendays
+steamAppId: 896660
+steamAppName: valheim
 steamAppLaunch: startserver.sh

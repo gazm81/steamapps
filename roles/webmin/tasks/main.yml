@@ -4,6 +4,10 @@
     msg: "This role is intended for Ubuntu operating systems only."
   when: ansible_distribution != "Ubuntu" and ansible_distribution != "CentOS" and ansible_distribution != "Debian"
 
+- name: debug distro name
+  debug:
+    msg: Distro is {{ ansible_distribution }}
+
 - name: Install firewalld service template.
   template:
     src: webmin.xml.j2
